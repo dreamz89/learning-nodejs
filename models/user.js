@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose')
 const Order = require('../models/order')
-const product = require('./product')
 
 const userSchema = new Schema({
   email: String,

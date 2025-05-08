@@ -15,7 +15,7 @@ const errorController = require('./controllers/error')
 const rootDir = require('./utils/path')
 const User = require('./models/user')
 
-const MONGODB_URI = 'mongodb+srv://evenstar1389:J$corg13mdb@udemycluster.jp5xm.mongodb.net/shop?retryWrites=true&w=majority&appName=UdemyCluster'
+const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PW}@udemycluster.jp5xm.mongodb.net/${process.env.MONGODB_DB}`
 
 const app = express()
 const store = new MongoDBStore({
@@ -87,6 +87,6 @@ app.use(errorController.get500)
 mongoose
   .connect(MONGODB_URI)
   .then(() => {
-    app.listen(3000)
+    app.listen(process.env.PORT || 3000)
   })
   .catch(err => console.log(err))

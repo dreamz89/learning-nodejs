@@ -7,6 +7,11 @@ const bodyParser = require('body-parser')
 const csrf = require('csurf')
 const flash = require('connect-flash')
 const multer  = require('multer')
+const helmet = require('helmet')
+const compression = require('compression')
+const morgan = require('morgan')
+const fs = require('fs')
+const path = require('path')
 
 const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
@@ -46,6 +51,9 @@ const fileFilter = (req, file, cb) => {
 app.set('view engine', 'ejs')
 app.set('views', 'views')
 
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+
+app.use(morgan('combined', { stream: accessLogStream }))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(multer({ storage: fileStorage, fileFilter }).single('image'))
 app.use(express.static(path.join(rootDir, 'public')))
@@ -53,6 +61,8 @@ app.use('/images', express.static(path.join(rootDir, 'images')))
 app.use(session({ secret: 'verylongstring', store: store, resave: false, saveUninitialized: false }))
 app.use(csrf())
 app.use(flash())
+app.use(helmet())
+app.use(compression())
 
 app.use((req, res, next) => {
   if(!req.session.user) {

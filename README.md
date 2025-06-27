@@ -34,3 +34,9 @@ Creating an Ecommerce site with authentication and authorization, show all produ
 - Serve product images statically from folder in server
 - Generate invoice pdf using [pdfkit](https://pdfkit.org/)
 - Preload or Stream invoice pdf using node filesystem
+
+#### Deployment
+- Adding secure HTTP response headers using [helmet](https://helmetjs.github.io/)
+- Keeping secret keys in environment variables via [dotenv](https://github.com/motdotla/dotenv)
+- Manually compress assets via [compression](https://expressjs.com/en/resources/middleware/compression.html)
+- Manually log requests via [morgan](https://expressjs.com/en/resources/middleware/morgan.html)
